@@ -11,6 +11,7 @@ import Messages
 
 /// To be notified of the `View`'s completion and to obtain its completion result, register as an observer of the `Notification.Name.MessageComposeViewDidFinish` notification.
 public struct MessageComposeView: UIViewControllerRepresentable {
+    /// Callback type used when a ``MessageComposeView`` disappears, whether cancelled, sent, etc.
     public typealias CompletionHandler = (_ result: MessageComposeResult) -> Void
     
     public var initialMessageInfo: MessageInfo
@@ -29,7 +30,10 @@ public struct MessageComposeView: UIViewControllerRepresentable {
     /// - Parameters:
     ///   - initialMessageInfo: Sets the initial values of the ``MessageComposeView``.
     ///   - completionHandler: A handler that is called when the view is closed.
-    public init(_ initialMessageInfo: MessageInfo, _ completionHandler: CompletionHandler? = nil) {
+    public init(
+        _ initialMessageInfo: MessageInfo,
+        _ completionHandler: CompletionHandler? = nil
+    ) {
         self.initialMessageInfo = initialMessageInfo
         self.completionHandler = completionHandler
     }
@@ -76,7 +80,7 @@ public struct MessageComposeView: UIViewControllerRepresentable {
         MCCoordinator(self)
     }
     
-    public mutating func addAttachments(_ attachments: [Attachment]) {
+    mutating func addAttachments(_ attachments: [Attachment]) {
         self.attachments.append(contentsOf: attachments)
     }
 }
@@ -189,13 +193,9 @@ extension MessageComposeView {
 struct MessageComposeView_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
-            MessageComposeView(.init(
-//                recipients: [
-//                "7863273437",
-//                "edon@valdman.works"
-//            ],
-//                                  body: "Test"
-            ))
+            MessageComposeView(
+                .init()
+            )
             .ignoresSafeArea()
         } else {
             // Fallback on earlier versions

@@ -14,6 +14,13 @@ extension View where Self == MailComposeView {
         newView.addAttachments(attachments)
         return newView
     }
+    
+    /// Attaches the specified attachment(s) to the email.
+    public func withAttachments(_ attachments: [MailComposeView.AttachmentData]) -> MailComposeView {
+        var newView = self
+        newView.addAttachments(attachments)
+        return newView
+    }
 }
 
 extension MailComposeView {
@@ -30,12 +37,18 @@ extension MailComposeView {
         }
         
         /// The data to attach. Typically, this is the contents of a file that you want to include.
-        var attachment: Data
+        public var attachment: Data
         
-        /// The MIME type of the specified data. (For example, the MIME type for a JPEG image is `image/jpeg`.) For a list of valid MIME types, see [http://www.iana.org/assignments/media-types/](http://www.iana.org/assignments/media-types/).
-        var mimeType: String
+        /// The MIME type of the specified data.
+        ///
+        /// For a list of valid MIME types, see <http://www.iana.org/assignments/media-types/>.
+        ///
+        /// > Example: The MIME type for a JPEG image is `image/jpeg`.)
+        public var mimeType: String
         
-        /// The preferred filename to associate with the data. This is the default name applied to the file when it is transferred to its destination. Any path separator (/) characters in the filename are converted to underscore (\_) characters prior to transmission.
-        var fileName: String
+        /// The preferred filename to associate with the data.
+        ///
+        /// This is the default name applied to the file when it is transferred to its destination. Any path separator (`/`) characters in the filename are converted to underscore (`_`) characters prior to transmission.
+        public var fileName: String
     }
 }
