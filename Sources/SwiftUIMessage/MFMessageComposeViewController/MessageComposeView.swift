@@ -7,7 +7,16 @@
 
 import SwiftUI
 import MessageUI
+
+// MessageUI is available on visionOS, but the Messages framework is not.
+// MFMessageComposeViewController exists on visionOS, but lacks the `.message`
+// property that allows attaching an MSMessage from an iMessage app extension.
+#if canImport(Messages)
 import Messages
+#else
+/// Shim `MSMessage` on visionOS so that `MessageInfo`
+public struct MSMessage: Equatable, Hashable {}
+#endif
 
 /// To be notified of the `View`'s completion and to obtain its completion result, register as an observer of the `Notification.Name.MessageComposeViewDidFinish` notification.
 public struct MessageComposeView: UIViewControllerRepresentable {
@@ -49,7 +58,9 @@ public struct MessageComposeView: UIViewControllerRepresentable {
         }
         
         composeVC.body = initialMessageInfo.body
+        #if canImport(Messages)
         composeVC.message = initialMessageInfo.message
+        #endif
 
         if disableUserAttachments {
             composeVC.disableUserAttachments()
