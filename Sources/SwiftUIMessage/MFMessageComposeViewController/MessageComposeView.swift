@@ -14,7 +14,7 @@ import MessageUI
 #if canImport(Messages)
 import Messages
 #else
-/// Shim `MSMessage` on visionOS so that `MessageInfo`
+/// Shim `MSMessage` on visionOS so that `MessageInfo.init` can compile.
 public struct MSMessage: Equatable, Hashable {}
 #endif
 
